@@ -10,6 +10,9 @@ package graph;
  */
 
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
 
 public class Graph {
     private CityNode[] nodes; // nodes of the graph
@@ -26,7 +29,26 @@ public class Graph {
      */
     public Graph(String filename) {
        // FILL IN CODE: load the graph from the given file
+        int xCor;
+        int yCor;
+        int i=0;
+        try {
+            File input = new File(filename);
+            Scanner sc = new Scanner(input);
+            nodes= new CityNode[sc.nextInt()];
+            while (sc.hasNext()) {
+                String line = sc.nextLine();
+                Scanner scanLine = new Scanner(line);
+                scanLine.useDelimiter(" ");
+                xCor=scanLine.nextInt();
+                yCor=scanLine.nextInt();
+                nodes[i]= new CityNode(line,xCor,yCor);
+                i++;
 
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
     }
@@ -38,6 +60,7 @@ public class Graph {
      * @return number of nodes
      */
     public int numNodes() {
+
         return nodes.length;
     }
 
@@ -46,8 +69,8 @@ public class Graph {
      * @param nodeId id of the node
      * @return head of the linked list of Edges
      */
-    public Edge getFirstEdge(int nodeId) {
-        return adjacencyList[nodeId];
+    public Edge getFirstEdge(int nodeId){
+    return adjacencyList[nodeId];
     }
 
     /**
