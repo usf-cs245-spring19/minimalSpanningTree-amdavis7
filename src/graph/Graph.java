@@ -13,6 +13,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.HashMap;
 
 public class Graph {
     private CityNode[] nodes; // nodes of the graph
@@ -29,22 +30,24 @@ public class Graph {
      */
     public Graph(String filename) {
        // FILL IN CODE: load the graph from the given file
-        int xCor;
-        int yCor;
+        double xCor;
+        double yCor;
         int i=0;
+        HashMap<Integer, String> hmap = new HashMap<Integer, String>();
         try {
             File input = new File(filename);
             Scanner sc = new Scanner(input);
-            nodes= new CityNode[sc.nextInt()];
+            sc.nextLine();
+            nodes= new CityNode[Integer.parseInt(sc.nextLine())];
             while (sc.hasNext()) {
                 String line = sc.nextLine();
-                Scanner scanLine = new Scanner(line);
-                scanLine.useDelimiter(" ");
-                xCor=scanLine.nextInt();
-                yCor=scanLine.nextInt();
-                nodes[i]= new CityNode(line,xCor,yCor);
+                String[] words = line.split(" ");
+                System.out.println(words[1]);
+                xCor= Double.parseDouble(words[1]);
+                yCor= Double.parseDouble(words[2]);
+                nodes[i]= new CityNode(words[0],xCor,yCor);
+                hmap.put(i,words[0]);
                 i++;
-
             }
         } catch (IOException e) {
             e.printStackTrace();
