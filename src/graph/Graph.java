@@ -33,22 +33,41 @@ public class Graph {
         double xCor;
         double yCor;
         int i=0;
-        HashMap<Integer, String> hmap = new HashMap<Integer, String>();
+        HashMap<String, Integer> hmap = new HashMap<String, Integer>();
+        int y=0;
         try {
             File input = new File(filename);
             Scanner sc = new Scanner(input);
-            sc.nextLine();
-            nodes= new CityNode[Integer.parseInt(sc.nextLine())];
-            while (sc.hasNext()) {
-                String line = sc.nextLine();
-                String[] words = line.split(" ");
-                System.out.println(words[1]);
-                xCor= Double.parseDouble(words[1]);
-                yCor= Double.parseDouble(words[2]);
-                nodes[i]= new CityNode(words[0],xCor,yCor);
-                hmap.put(i,words[0]);
-                i++;
+            //sc.nextLine();
+            while (sc.hasNext()){
+                if(sc.nextLine().equals("NODES")){
+                    int x=Integer.parseInt(sc.nextLine());
+                    nodes= new CityNode[x];
+                    Edge adjacencyList[]=new Edge[x];
+                    while (sc.hasNext()) {
+                        String line = sc.nextLine();
+                        String[] words = line.split(" ");
+                        xCor= Double.parseDouble(words[1]);
+                        yCor= Double.parseDouble(words[2]);
+                        nodes[i]= new CityNode(words[0],xCor,yCor);
+                        hmap.put(words[0],i);
+                        i++;
+                    }
+                }
+                if(sc.nextLine().equals("ARCS")){
+                    while(sc.hasNext()){
+                        String line= sc.nextLine();
+                        String[] words= line.split(" ");
+                        String id1=words[0];
+                        String id2=words[1];
+                        int key= Integer.parseInt(words[2]);
+                        int id1Key= hmap.get(id1);
+                        int id2Key= hmap.get(id2);
+                        adjacencyList[y]= new Edge(id1Key,id2Key,key);
+                    }
+                }
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
