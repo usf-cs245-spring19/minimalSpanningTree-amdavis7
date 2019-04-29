@@ -38,12 +38,53 @@ public class Graph {
         try {
             File input = new File(filename);
             Scanner sc = new Scanner(input);
+            sc.nextLine();
+
+            //NODES
+            int numNodes=Integer.parseInt(sc.nextLine());
+            nodes= new CityNode[numNodes];
+            adjacencyList=new Edge[44];
+            for(int x=0;x<numNodes;x++) {
+                String line = sc.nextLine();
+                String[] words = line.split(" ");
+                xCor= Double.parseDouble(words[1]);
+                yCor= Double.parseDouble(words[2]);
+                nodes[i]= new CityNode(words[0],xCor,yCor);
+                hmap.put(words[0],i);
+                i++;
+            }
+
+                //ARCS
+                sc.nextLine();
+            while(sc.hasNext()){
+                String line= sc.nextLine();
+                String[] words= line.split(" ");
+                String id1=words[0];
+                String id2=words[1];
+                int key= Integer.parseInt(words[2]);
+                int id1Key= hmap.get(id1);
+                int id2Key= hmap.get(id2);
+                adjacencyList[y]= new Edge(id1Key,id2Key,key);
+                y++;
+                numEdges++;
+                }
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        /**
+        try {
+            File input = new File(filename);
+            Scanner sc = new Scanner(input);
             //sc.nextLine();
             while (sc.hasNext()){
+                //NODES
                 if(sc.nextLine().equals("NODES")){
                     int x=Integer.parseInt(sc.nextLine());
                     nodes= new CityNode[x];
-                    Edge adjacencyList[]=new Edge[x];
+                    adjacencyList=new Edge[x];
                     while (sc.hasNext()) {
                         String line = sc.nextLine();
                         String[] words = line.split(" ");
@@ -54,6 +95,8 @@ public class Graph {
                         i++;
                     }
                 }
+
+                //ARCS
                 if(sc.nextLine().equals("ARCS")){
                     while(sc.hasNext()){
                         String line= sc.nextLine();
@@ -64,6 +107,7 @@ public class Graph {
                         int id1Key= hmap.get(id1);
                         int id2Key= hmap.get(id2);
                         adjacencyList[y]= new Edge(id1Key,id2Key,key);
+                        numEdges++;
                     }
                 }
             }
@@ -71,7 +115,7 @@ public class Graph {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        **/
 
     }
 
@@ -123,11 +167,13 @@ public class Graph {
             System.out.println("Graph is empty. Load the graph first.");
             return null;
         }
-        Point[] nodes = new Point[this.nodes.length];
+        Point[] nodes1 = new Point[this.nodes.length];
         // FILL IN CODE
+        for(int i=0;i<nodes.length;i++){
+            nodes1[i]=nodes[i].getLocation();
+        }
 
-
-        return nodes;
+        return nodes1;
     }
 
     /**
