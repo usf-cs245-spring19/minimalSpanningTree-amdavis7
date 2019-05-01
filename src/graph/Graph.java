@@ -31,10 +31,10 @@ public class Graph {
      * @param filename name of the file that has nodes and edges
      */
     public Graph(String filename) {
-       // FILL IN CODE: load the graph from the given file
+        // FILL IN CODE: load the graph from the given file
         double xCor;
         double yCor;
-        int i=0;
+        int i = 0;
 
 
         try {
@@ -43,52 +43,52 @@ public class Graph {
             sc.nextLine();
 
             //NODES
-            int numNodes=Integer.parseInt(sc.nextLine());
-            nodes= new CityNode[numNodes];
-            adjacencyList=new Edge[numNodes];
-            for(int x=0;x<numNodes;x++) {
+            int numNodes = Integer.parseInt(sc.nextLine());
+            nodes = new CityNode[numNodes];
+            adjacencyList = new Edge[numNodes];
+
+            for (int x = 0; x < numNodes; x++) {
                 String line = sc.nextLine();
                 String[] words = line.split(" ");
-                xCor= Double.parseDouble(words[1]);
-                yCor= Double.parseDouble(words[2]);
-                nodes[i]= new CityNode(words[0],xCor,yCor);
-                hmap.put(words[0],i);
-                hmapNames.put(i,words[0]);
+                xCor = Double.parseDouble(words[1]);
+                yCor = Double.parseDouble(words[2]);
+                nodes[i] = new CityNode(words[0], xCor, yCor);
+                hmap.put(words[0], i);
+                hmapNames.put(i, words[0]);
                 i++;
             }
 
-                //ARCS
-                sc.nextLine();
-            while(sc.hasNext()){
-                String line= sc.nextLine();
-                String[] words= line.split(" ");
-                String id1=words[0];
-                String id2=words[1];
-                int key= Integer.parseInt(words[2]);
-                int id1Key= hmap.get(id1);
-                int id2Key= hmap.get(id2);
+            //ARCS
+            sc.nextLine();
+            while (sc.hasNext()) {
+                String line = sc.nextLine();
+                String[] words = line.split(" ");
+                String id1 = words[0];
+                String id2 = words[1];
+                int key = Integer.parseInt(words[2]);
+                int id1Key = hmap.get(id1);
+                int id2Key = hmap.get(id2);
                 //CITY !
-                Edge head1= adjacencyList[id1Key];
-                if(head1!=null){
-                    Edge newE= new Edge(id1Key,id2Key,key);
+                Edge head1 = adjacencyList[id1Key];
+                if (head1 != null) {
+                    Edge newE = new Edge(id1Key, id2Key, key);
                     newE.setNext(head1);
-                }
-                else{
-                    adjacencyList[id1Key]= new Edge(id1Key,id2Key,key);
+                    adjacencyList[id1Key] = newE;
+                } else {
+                    adjacencyList[id1Key] = new Edge(id1Key, id2Key, key);
                 }
                 numEdges++;
                 //CITY 2
-                Edge head2= adjacencyList[id2Key];
-                if(head2!=null){
-                    Edge newE= new Edge(id2Key,id1Key,key);
-                    newE.setNext(head1);
-                }
-                else{
-                    adjacencyList[id1Key]= new Edge(id2Key,id1Key,key);
+                Edge head2 = adjacencyList[id2Key];
+                if (head2 != null) {
+                    Edge newE = new Edge(id2Key, id1Key, key);
+                    newE.setNext(head2);
+                    adjacencyList[id2Key] = newE;
+                } else {
+                    adjacencyList[id2Key] = new Edge(id2Key, id1Key, key);
                 }
                 numEdges++;
-                }
-
+            }
 
 
         } catch (IOException e) {
@@ -130,28 +130,10 @@ public class Graph {
     public Point[][] getEdges() {
         Point[][] edges2D = new Point[numEdges][2];
         int edgeCount=0;
-
-        /**
-        for (int i = 0; i < adjacencyList.length; i++) {
-            Point[] edge = new Point[2];
-            Edge x= adjacencyList[i];
-            int p1num=x.getId1();
-            int p2num=x.getId2();
-            Point p1= nodes[p1num].getLocation();
-            Point p2= nodes[p2num].getLocation();
-            edge[0]=p1;
-            edge[1]=p2;
-            edges2D[i]=edge;
-        }
-         **/
-
         // FILL IN CODE
         for(int i=0;i<adjacencyList.length;i++){
             Edge x= adjacencyList[i];
-            if(x==null){
-                System.out.println("NULL!");
-            }
-            while (x!=null && x.next()!=null){
+            while (x!=null ){
                 int p1num=x.getId1();
                 int p2num=x.getId2();
                 Point p1= nodes[p1num].getLocation();
