@@ -19,6 +19,8 @@ public class Graph {
     private CityNode[] nodes; // nodes of the graph
     private Edge[] adjacencyList; // adjacency list; for each vertex stores a linked list of edges
     private int numEdges; // total number of edges
+    private HashMap<String, Integer> hmap = new HashMap<String, Integer>();
+    private HashMap<Integer, String> hmapNames = new HashMap<Integer, String>();
     // Add other variables as needed
 
 
@@ -33,7 +35,7 @@ public class Graph {
         double xCor;
         double yCor;
         int i=0;
-        HashMap<String, Integer> hmap = new HashMap<String, Integer>();
+
 
         try {
             File input = new File(filename);
@@ -51,6 +53,7 @@ public class Graph {
                 yCor= Double.parseDouble(words[2]);
                 nodes[i]= new CityNode(words[0],xCor,yCor);
                 hmap.put(words[0],i);
+                hmapNames.put(i,words[0]);
                 i++;
             }
 
@@ -127,15 +130,36 @@ public class Graph {
     public Point[][] getEdges() {
         Point[][] edges2D = new Point[numEdges][2];
         int edgeCount=0;
+
+        /**
+        for (int i = 0; i < adjacencyList.length; i++) {
+            Point[] edge = new Point[2];
+            Edge x= adjacencyList[i];
+            int p1num=x.getId1();
+            int p2num=x.getId2();
+            Point p1= nodes[p1num].getLocation();
+            Point p2= nodes[p2num].getLocation();
+            edge[0]=p1;
+            edge[1]=p2;
+            edges2D[i]=edge;
+        }
+         **/
+
         // FILL IN CODE
         for(int i=0;i<adjacencyList.length;i++){
             Edge x= adjacencyList[i];
-            while (x.next()!=null){
-                Point p1= nodes[x.getId1()].getLocation();
-                Point p2= nodes[x.getId2()].getLocation();
+            if(x==null){
+                System.out.println("NULL!");
+            }
+            while (x!=null && x.next()!=null){
+                int p1num=x.getId1();
+                int p2num=x.getId2();
+                Point p1= nodes[p1num].getLocation();
+                Point p2= nodes[p2num].getLocation();
                 edges2D[edgeCount][0]=p1;
                 edges2D[edgeCount][1]=p2;
                 x=x.next();
+                edgeCount++;
             }
         }
 
@@ -169,11 +193,14 @@ public class Graph {
      */
     public String[] getCities() {
         if (nodes == null) {
-            //System.out.println("Graph is empty, load the graph from the file first");
+            System.out.println("Graph is empty, load the graph from the file first");
             return null;
         }
         String[] labels = new String[nodes.length];
         // FILL IN CODE
+        for(int i=0;i<nodes.length;i++){
+            labels[i]=hmapNames.get(i);
+        }
 
 
         return labels;
