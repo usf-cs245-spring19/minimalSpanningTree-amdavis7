@@ -4,17 +4,18 @@ import graph.*;
 
 /** Subclass of MSTAlgorithm. Uses Prim's algorithm to compute MST of the graph. */
 public class PrimAlgorithm extends MSTAlgorithm {
-
+    int[][] primTable; //= new int[numNodes][2];
     private int sourceVertex;
 
     /**
      * Constructor for PrimAlgorithm. Takes the graph
-     * @param graph input graph
-     * @param sourceVertex the first vertex of MST
+     * //@param //graph input graph
+     * //@param //sourceVertex the first vertex of MST
      */
     public PrimAlgorithm(Graph graph, int sourceVertex) {
         super(graph);
         this.sourceVertex = sourceVertex;
+        
     }
 
     /**

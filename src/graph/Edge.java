@@ -26,6 +26,7 @@ public class Edge implements Comparable<Edge> {
 	 * @return the next edge in the linked list
 	 */
 	public Edge next(){
+
 		return this.next;
 	}
 
@@ -42,6 +43,7 @@ public class Edge implements Comparable<Edge> {
 	 * @return id2
 	 */
 	public int getId2(){
+
 		return this.id2;
 	}
 
@@ -50,6 +52,7 @@ public class Edge implements Comparable<Edge> {
 	 * @return cost of the edge
 	 */
 	public int getCost(){
+
 		return this.cost;
 	}
 
@@ -58,6 +61,7 @@ public class Edge implements Comparable<Edge> {
 	 * @param newnext nextEdge in the linked list
 	 */
 	public void setNext(Edge newnext){
+
 		this.next = newnext;
 	}
 
@@ -70,8 +74,15 @@ public class Edge implements Comparable<Edge> {
 	@Override
 	public int compareTo(Edge o) {
 		// FILL IN CODE: compare edges based on the cost
-
-		return 0; // change
+        if (this.getCost()>o.getCost()){
+            return 1;
+        }
+        if(this.getCost()==o.getCost()){
+            return 0;
+        }
+        else{
+            return -1;
+        }
 	}
 	
          
