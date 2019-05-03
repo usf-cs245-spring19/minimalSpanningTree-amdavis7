@@ -47,6 +47,7 @@ public class Graph {
             nodes = new CityNode[numNodes];
             adjacencyList = new Edge[numNodes];
 
+
             for (int x = 0; x < numNodes; x++) {
                 String line = sc.nextLine();
                 String[] words = line.split(" ");

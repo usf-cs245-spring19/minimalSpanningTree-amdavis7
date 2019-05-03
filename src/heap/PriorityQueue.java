@@ -4,25 +4,29 @@ package heap;
  *  Used in Prim's algorithm. */
 public class PriorityQueue {
 	// FILL IN CODE as needed
-    private int size;
+    private int size=0;
     private int[] positions;
-    private int[] heap;
+    //private int[] heap;
+    private Node[] heap2= new Node[22];
 
-    public void insert(int value) {
+    public void insert(int nodeId, int cost) {
         size++;
         int index = size;
-        heap[index] = value;
+        //heap[index] = nodeId;
+        heap2[index]= new Node(nodeId,cost);
 
         bubbleUp();
     }
 
 
-    public int remove() {
-        heap[1] = heap[size];
-        heap[size] = '\0';
+    public int removeMin() {
+        //heap[1] = heap[size];
+        //heap[size] = '\0';
+        heap2[1]= heap2[size];
+        heap2[size]=null;
         size--;
         bubbleDown();
-        return heap[1];
+        return heap2[1].nodeId;
     }
 
     public void reduceKey(int nodeId, int newPriority){
@@ -50,16 +54,16 @@ public class PriorityQueue {
         return rightChild(i) <= size;
     }
     private int parent(int i) {
-        return heap[parentIndex(i)];
+        return heap2[parentIndex(i)].nodeId;
     }
     private int parentIndex(int i) {
         return i / 2;
     }
 
     private void swap(int index1, int index2) {
-        int temp = heap[index1];
-        heap[index1] = heap[index2];
-        heap[index2] = temp;
+        Node temp = heap2[index1];
+        heap2[index1] = heap2[index2];
+        heap2[index2] = temp;
     }
 
     private void bubbleDown() {
@@ -68,11 +72,11 @@ public class PriorityQueue {
         while (hasLeftChild(index)) {
             int smallerChild = leftChild(index);
 
-            if (hasRightChild(index) && heap[leftChild(index)]>(heap[rightChild(index)])) {
+            if (hasRightChild(index) && heap2[leftChild(index)].cost>(heap2[rightChild(index)]).cost) {
                 smallerChild = rightChild(index);
             }
 
-            if (heap[index] > (heap[smallerChild])) {
+            if (heap2[index].cost > (heap2[smallerChild]).cost) {
                 swap(index, smallerChild);
             } else {
                 break;
@@ -83,10 +87,11 @@ public class PriorityQueue {
     }
 
 
+
     private void bubbleUp() {
         int current = this.size;
-
-        while (hasParent(current) && (parent(current)> (heap[current]))) {
+        //System.out.println(current);
+        while (hasParent(current) && (heap2[parentIndex(current)].cost> (heap2[current]).cost)) {
             swap(current, parentIndex(current));
             current = parentIndex(current);
         }

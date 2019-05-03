@@ -28,6 +28,7 @@ public class CityNode  {
 	 * @return Point that has x and y; location of the node on the image
 	 */
 	public Point getLocation() {
+
 		return location;
 	}
 
@@ -36,6 +37,7 @@ public class CityNode  {
 	 * @return the name of the city
 	 */
 	public String getCity() {
+
 		return city;
 	}
 }

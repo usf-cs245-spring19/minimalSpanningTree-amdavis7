@@ -4,6 +4,7 @@ import graph.Edge;
 import graph.Graph;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /** Parent class of PrimAlgorithm and KruskalAlgorithm.
@@ -15,6 +16,7 @@ public abstract class MSTAlgorithm {
     // MinimalSpanningTree
 
     public MSTAlgorithm(Graph graph) {
+
         this.graph = graph;
     }
 
@@ -23,6 +25,7 @@ public abstract class MSTAlgorithm {
      * @param edge edge that is a part of MST
      */
     public void addMSTEdge(Edge edge) {
+
         edgesMST.add(edge);
     }
 
@@ -37,6 +40,10 @@ public abstract class MSTAlgorithm {
      * */
     public void printMST() {
         // FILL IN CODE
+        Iterator iterator= edgesMST.iterator();
+        while(iterator.hasNext()){
+            System.out.println(iterator.next());
+        }
     }
 
     /**
@@ -44,6 +51,7 @@ public abstract class MSTAlgorithm {
      * @return number of nodes
      */
     public int numNodes() {
+
         return graph.numNodes();
     }
 
