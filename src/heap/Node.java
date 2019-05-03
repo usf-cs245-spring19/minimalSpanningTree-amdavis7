@@ -8,4 +8,13 @@ public class Node {
         this.nodeId=id;
         this.cost=cost;
     }
+    public int getCost(){
+        return this.cost;
+    }
+    public int getNodeId(){
+        return this.nodeId;
+    }
+    public void setCost(int cost){
+        this.cost=cost;
+    }
 }

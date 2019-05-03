@@ -26,11 +26,15 @@ public class PriorityQueue {
         heap2[size]=null;
         size--;
         bubbleDown();
-        return heap2[1].nodeId;
+        return heap2[1].getNodeId();
     }
 
     public void reduceKey(int nodeId, int newPriority){
-        return;
+        for(int i =0; i< heap2.length;i++){
+            if (heap2[i].getNodeId()==nodeId){
+                heap2[i].setCost(newPriority);
+            }
+        }
     }
 
     private boolean hasParent(int i) {
@@ -54,7 +58,7 @@ public class PriorityQueue {
         return rightChild(i) <= size;
     }
     private int parent(int i) {
-        return heap2[parentIndex(i)].nodeId;
+        return heap2[parentIndex(i)].getNodeId();
     }
     private int parentIndex(int i) {
         return i / 2;
@@ -72,11 +76,11 @@ public class PriorityQueue {
         while (hasLeftChild(index)) {
             int smallerChild = leftChild(index);
 
-            if (hasRightChild(index) && heap2[leftChild(index)].cost>(heap2[rightChild(index)]).cost) {
+            if (hasRightChild(index) && heap2[leftChild(index)].getCost()>(heap2[rightChild(index)]).getCost()) {
                 smallerChild = rightChild(index);
             }
 
-            if (heap2[index].cost > (heap2[smallerChild]).cost) {
+            if (heap2[index].getCost() > (heap2[smallerChild]).getCost()) {
                 swap(index, smallerChild);
             } else {
                 break;
@@ -91,7 +95,7 @@ public class PriorityQueue {
     private void bubbleUp() {
         int current = this.size;
         //System.out.println(current);
-        while (hasParent(current) && (heap2[parentIndex(current)].cost> (heap2[current]).cost)) {
+        while (hasParent(current) && (heap2[parentIndex(current)].getCost()> (heap2[current]).getCost())) {
             swap(current, parentIndex(current));
             current = parentIndex(current);
         }
