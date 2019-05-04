@@ -7,34 +7,45 @@ public class PriorityQueue {
     private int size=0;
     private int[] positions;
     //private int[] heap;
-    private Node[] heap2= new Node[22];
-
+    private Node[] heap2;
+    public PriorityQueue(int size){
+        heap2= new Node[size+1];
+        heap2[0]=new Node(-1,Integer.MIN_VALUE);
+    }
     public void insert(int nodeId, int cost) {
         size++;
         int index = size;
         //heap[index] = nodeId;
         heap2[index]= new Node(nodeId,cost);
 
-        bubbleUp();
+        bubbleUp(index);
     }
 
 
     public int removeMin() {
         //heap[1] = heap[size];
         //heap[size] = '\0';
+        Node x= heap2[1];
         heap2[1]= heap2[size];
+
         heap2[size]=null;
+
         size--;
         bubbleDown();
-        return heap2[1].getNodeId();
+        return x.getNodeId();
     }
 
     public void reduceKey(int nodeId, int newPriority){
-        for(int i =0; i< heap2.length;i++){
+
+        // Want to do: int i = positions[nodeid];
+        for(int i =0; i<=size;i++){
             if (heap2[i].getNodeId()==nodeId){
                 heap2[i].setCost(newPriority);
+                bubbleUp(i);
+                break;
             }
         }
+
     }
 
     private boolean hasParent(int i) {
@@ -92,14 +103,32 @@ public class PriorityQueue {
 
 
 
-    private void bubbleUp() {
-        int current = this.size;
+    private void bubbleUp(int costNode) {
+        int current = costNode;
         //System.out.println(current);
         while (hasParent(current) && (heap2[parentIndex(current)].getCost()> (heap2[current]).getCost())) {
             swap(current, parentIndex(current));
             current = parentIndex(current);
         }
 
+    }
+
+    public void print(){
+        for(int i=0;i<=size;i++){
+            //System.out.println(i);
+            System.out.println(heap2[i].getNodeId()+" "+heap2[i].getCost());
+        }
+    }
+    public static void main(String[] args) {
+        PriorityQueue newPriorityQueue= new PriorityQueue(5);
+        newPriorityQueue.insert(3,5);
+        newPriorityQueue.insert(4,6);
+        newPriorityQueue.insert(0,2);
+        newPriorityQueue.insert(2,4);
+        newPriorityQueue.insert(1,3);
+        newPriorityQueue.removeMin();
+        newPriorityQueue.reduceKey(4,1);
+        newPriorityQueue.print();
     }
 
 

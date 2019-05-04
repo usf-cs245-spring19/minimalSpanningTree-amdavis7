@@ -8,7 +8,6 @@ public class PrimAlgorithm extends MSTAlgorithm {
     private int[][] primTable;
     private int sourceVertex;
     private int max= Integer.MAX_VALUE;
-    PriorityQueue newPriorityQueue= new PriorityQueue();
     private int numNodes;
     /**
      * Constructor for PrimAlgorithm. Takes the graph
@@ -20,15 +19,8 @@ public class PrimAlgorithm extends MSTAlgorithm {
 
         this.sourceVertex = sourceVertex;
         numNodes= super.numNodes();
-        primTable=new int[numNodes][2];
-        for (int x=0;x<numNodes;x++){
-            primTable[x][0]=max;
-            primTable[x][1]=-1;
-            newPriorityQueue.insert(x,max);
-        }
-        primTable[sourceVertex][0]=0;
-        primTable[sourceVertex][1]=-1;
-        newPriorityQueue.insert(0,Integer.MIN_VALUE);
+
+        //newPriorityQueue.insert(0,Integer.MIN_VALUE);
 
 
     }
@@ -40,12 +32,33 @@ public class PrimAlgorithm extends MSTAlgorithm {
     @Override
     public void computeMST() {
         // FILL IN CODE
+        PriorityQueue newPriorityQueue= new PriorityQueue(numNodes);
+        primTable=new int[numNodes][3];
+        for (int x=0;x<numNodes;x++){
+            primTable[x][0]=max;
+            primTable[x][1]=-1;
+            primTable[x][2]=-1;
+            newPriorityQueue.insert(x,max);
+        }
+        primTable[sourceVertex][0]=0;
+        primTable[sourceVertex][1]=-1;
+        primTable[sourceVertex][2]=0;
+        newPriorityQueue.reduceKey(sourceVertex,0);
+       // newPriorityQueue.print();
         for(int i=0; i<numNodes; i++){
             int v = newPriorityQueue.removeMin();
+            primTable[v][2]=0;
+            System.out.println(v+ " "+primTable[v][1]);
+            //System.out.println(v+" "+ primTable[v][0]);
+            if(v!=sourceVertex){
+                Edge newEdge= new Edge(v,primTable[v][1],primTable[v][0]);
+                addMSTEdge(newEdge);
+            }
             Edge head= super.getFirstEdge(v);
-            System.out.println(head.getId1());
+           // System.out.println(v);
+            //System.out.println(head.getId1());
             while(head!=null){
-                if (primTable[head.getId2()][1]==-1){
+                if (primTable[head.getId2()][2]==-1){
                     if (primTable[head.getId2()][0]>head.getCost()){
                         primTable[head.getId2()][0]=head.getCost();
                         primTable[head.getId2()][1]=head.getId1();
@@ -55,6 +68,7 @@ public class PrimAlgorithm extends MSTAlgorithm {
                 head=head.next();
             }
         }
+
         // Note: must use a PriorityQueue and be efficient
 
 
