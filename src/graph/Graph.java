@@ -20,7 +20,7 @@ public class Graph {
     private Edge[] adjacencyList; // adjacency list; for each vertex stores a linked list of edges
     private int numEdges; // total number of edges
     private HashMap<String, Integer> hmap = new HashMap<String, Integer>();
-    private HashMap<Integer, String> hmapNames = new HashMap<Integer, String>();
+    //private HashMap<Integer, String> hmapNames = new HashMap<Integer, String>();
     // Add other variables as needed
 
 
@@ -55,7 +55,7 @@ public class Graph {
                 yCor = Double.parseDouble(words[2]);
                 nodes[i] = new CityNode(words[0], xCor, yCor);
                 hmap.put(words[0], i);
-                hmapNames.put(i, words[0]);
+                //hmapNames.put(i, words[0]);
                 i++;
             }
 
@@ -182,7 +182,7 @@ public class Graph {
         String[] labels = new String[nodes.length];
         // FILL IN CODE
         for(int i=0;i<nodes.length;i++){
-            labels[i]=hmapNames.get(i);
+            labels[i]=nodes[i].getCity();
         }
 
 

@@ -78,6 +78,7 @@ public abstract class MSTAlgorithm {
 
         for (Edge edge : edgesMST) {
             edges[i][0] = locations[edge.getId1()];
+            //System.out.println(locations[edge.getId2()]);
             edges[i][1] = locations[edge.getId2()];
             i++;
         }

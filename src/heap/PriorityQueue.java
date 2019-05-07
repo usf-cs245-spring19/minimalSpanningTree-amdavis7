@@ -8,16 +8,17 @@ public class PriorityQueue {
     private int[] positions;
     //private int[] heap;
     private Node[] heap2;
+
     public PriorityQueue(int size){
         heap2= new Node[size+1];
+        positions=new int[size];
         heap2[0]=new Node(-1,Integer.MIN_VALUE);
     }
     public void insert(int nodeId, int cost) {
         size++;
         int index = size;
-        //heap[index] = nodeId;
         heap2[index]= new Node(nodeId,cost);
-
+        positions[nodeId]=index;
         bubbleUp(index);
     }
 
@@ -37,14 +38,9 @@ public class PriorityQueue {
 
     public void reduceKey(int nodeId, int newPriority){
 
-        // Want to do: int i = positions[nodeid];
-        for(int i =0; i<=size;i++){
-            if (heap2[i].getNodeId()==nodeId){
-                heap2[i].setCost(newPriority);
-                bubbleUp(i);
-                break;
-            }
-        }
+        int i= positions[nodeId];
+        heap2[i].setCost(newPriority);
+        bubbleUp(i);
 
     }
 
@@ -76,9 +72,13 @@ public class PriorityQueue {
     }
 
     private void swap(int index1, int index2) {
+        positions[heap2[index1].getNodeId()] = index2;
+        positions[heap2[index2].getNodeId()] = index1;
         Node temp = heap2[index1];
         heap2[index1] = heap2[index2];
         heap2[index2] = temp;
+
+
     }
 
     private void bubbleDown() {
@@ -93,6 +93,7 @@ public class PriorityQueue {
 
             if (heap2[index].getCost() > (heap2[smallerChild]).getCost()) {
                 swap(index, smallerChild);
+
             } else {
                 break;
             }
@@ -108,6 +109,7 @@ public class PriorityQueue {
         //System.out.println(current);
         while (hasParent(current) && (heap2[parentIndex(current)].getCost()> (heap2[current]).getCost())) {
             swap(current, parentIndex(current));
+
             current = parentIndex(current);
         }
 
@@ -118,14 +120,18 @@ public class PriorityQueue {
             //System.out.println(i);
             System.out.println(heap2[i].getNodeId()+" "+heap2[i].getCost());
         }
+        for(int x=0;x<=positions.length;x++){
+            System.out.println("Positions");
+            System.out.println(positions[x]);
+        }
     }
     public static void main(String[] args) {
         PriorityQueue newPriorityQueue= new PriorityQueue(5);
-        newPriorityQueue.insert(3,5);
-        newPriorityQueue.insert(4,6);
-        newPriorityQueue.insert(0,2);
-        newPriorityQueue.insert(2,4);
-        newPriorityQueue.insert(1,3);
+        newPriorityQueue.insert(2,1);
+        newPriorityQueue.insert(4,2);
+        newPriorityQueue.insert(1,6);
+        newPriorityQueue.insert(3,0);
+        newPriorityQueue.insert(0,3);
         newPriorityQueue.removeMin();
         newPriorityQueue.reduceKey(4,1);
         newPriorityQueue.print();

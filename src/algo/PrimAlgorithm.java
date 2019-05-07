@@ -9,20 +9,18 @@ public class PrimAlgorithm extends MSTAlgorithm {
     private int sourceVertex;
     private int max= Integer.MAX_VALUE;
     private int numNodes;
+
     /**
      * Constructor for PrimAlgorithm. Takes the graph
      * //@param //graph input graph
      * //@param //sourceVertex the first vertex of MST
      */
+
     public PrimAlgorithm(Graph graph, int sourceVertex) {
         super(graph);
 
         this.sourceVertex = sourceVertex;
-        numNodes= super.numNodes();
-
-        //newPriorityQueue.insert(0,Integer.MIN_VALUE);
-
-
+        this.numNodes= super.numNodes();
     }
 
     /**
@@ -45,12 +43,14 @@ public class PrimAlgorithm extends MSTAlgorithm {
         primTable[sourceVertex][2]=0;
         newPriorityQueue.reduceKey(sourceVertex,0);
        // newPriorityQueue.print();
+
         for(int i=0; i<numNodes; i++){
             int v = newPriorityQueue.removeMin();
             primTable[v][2]=0;
-            System.out.println(v+ " "+primTable[v][1]);
+            //System.out.println(v+ " "+primTable[v][1]);
             //System.out.println(v+" "+ primTable[v][0]);
             if(v!=sourceVertex){
+                //System.out.println(primTable[v][1]);
                 Edge newEdge= new Edge(v,primTable[v][1],primTable[v][0]);
                 addMSTEdge(newEdge);
             }
@@ -58,6 +58,7 @@ public class PrimAlgorithm extends MSTAlgorithm {
            // System.out.println(v);
             //System.out.println(head.getId1());
             while(head!=null){
+                //System.out.println(primTable[head.getId2()][1]);
                 if (primTable[head.getId2()][2]==-1){
                     if (primTable[head.getId2()][0]>head.getCost()){
                         primTable[head.getId2()][0]=head.getCost();
